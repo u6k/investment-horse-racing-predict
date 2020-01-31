@@ -1,0 +1,26 @@
+language: python
+cachhe: pip
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+script:
+  - docker-compose build
+  - docker-compose run app pipenv run lint
+  - docker-compose run app pipenv run test
+  - docker build -t u6kapps/investment-horse-racing-predict -f Dockerfile.production .
+
+after_success:
+  - if [ -n "$TRAVIS_TAG" ]; then
+      echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin;
+      docker tag u6kapps/investment-horse-racing-predict u6kapps/investment-horse-racing-predict:$TRAVIS_TAG;
+      docker push u6kapps/investment-horse-racing-predict;
+    else
+      echo skip docker push;
+    fi
+
+notifications:
+  slack:
+    secure: b6HeTbjdvmi5nEZlfhXbFQy3OAjsPwq976P5dt+Cfg6V2ZBxGpMLJenGxZjkDdUoPz1MAr5epudYMZ5yw2eNirupwVmxKVXSabnVbyAEk7q5rFkvf2tu4G5OUpUuAYUvB+TEKKsVxesfPhEAMmQC6d66vqcKn6A3d0JVmq2NHAj180EGfhu9GJUscBPV932U6uoi92uJqm8go8AfSeUGwMPQXvynBdiErFuXCg8l5LVl7ORx90kxWkT4PUB0mqWFfepdVPHJCgChqc1jI9bnHEjjb23kop5XlOZje7Zv7ArdDWjtTsDS1Uogb4DPpocccjCbpV/Xsx87/FTdEI8VtcZe+Ic9gGMOBqQEw4af8Z9CwmH8gFD9aVTvPa2u3Nh+UnFhOE/0V1WS4SHZrjuz/By6HSqQ6CzMkoGwl2K+ix6cq3aUoCfp3+djWT5TKLjuAaz/Ws7UqJKKR465gC2YWRffQ3JqlGXWP7GApCYZ7dCOdsgw4zY+H5BF0xWq2GyhcNYcZO6Nkw2+0pMe4omD81m9UooAWneuzFqv47AWyMbmpREfK21iJ38IdHgh1W63D2mXPil+P+Fd6EL2/nIg38h7HSIMYGQHSKRbbbhhVS021KkkeTqmw3fwZn1fwOEHsQq4lpNV6ODMGJbcvUNa9z5Cp0rUUO5xldgI878uM38=

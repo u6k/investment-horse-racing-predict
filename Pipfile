@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+flake8 = "*"
+autopep8 = "*"
+nose = "*"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+lint = "flake8 ."
+fix = "autopep8 -ivr ."
+test = "nosetests -v"
