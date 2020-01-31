@@ -18,8 +18,6 @@ df = df.drop("jockey_id", axis=1)
 
 df = df.drop("trainer_id", axis=1)
 
-df = df.drop("birthday", axis=1)
-
 df = df.drop("course_type", axis=1)
 
 df = df.drop("weather", axis=1)
@@ -28,7 +26,13 @@ df = df.drop("course_condition", axis=1)
 
 df = df.drop("gender", axis=1)
 
+df = df.drop("birthday", axis=1)
+
 df = df.drop("coat_color", axis=1)
+
+df = df.drop("result_odds_win", axis=1)
+
+df = df.drop("result_odds_place", axis=1)
 
 df.info()
 df.head()

@@ -10,6 +10,7 @@ nose = "*"
 boto3 = "*"
 psycopg2 = "*"
 pandas = "*"
+sklearn = "*"
 
 [requires]
 python_version = "3.8"

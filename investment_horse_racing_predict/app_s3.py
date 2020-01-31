@@ -1,5 +1,6 @@
 import os
 import io
+import joblib
 import pandas as pd
 import boto3
 
@@ -31,4 +32,24 @@ def write_dataframe(df, s3_key):
             Bucket=os.getenv("S3_BUCKET"),
             Key=os.getenv("S3_FOLDER")+s3_key,
             Body=io.BytesIO(buf.getvalue().encode())
+        )
+
+
+def read_sklearn_model(s3_key):
+    s3 = get_s3_client()
+    obj = s3.get_object(Bucket=os.getenv("S3_BUCKET"), Key=os.getenv("S3_FOLDER")+s3_key)
+    with io.BytesIO(obj["Body"].read()) as buf:
+        model = joblib.load(buf)
+
+    return model
+
+
+def write_sklearn_model(model, s3_key):
+    with io.BytesIO() as buf:
+        joblib.dump(model, buf, compress=9)
+        s3 = get_s3_client()
+        s3.put_object(
+            Bucket=os.getenv("S3_BUCKET"),
+            Key=os.getenv("S3_FOLDER")+s3_key,
+            Body=io.BytesIO(buf.getvalue())
         )
