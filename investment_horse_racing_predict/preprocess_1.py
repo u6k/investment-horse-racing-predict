@@ -3,6 +3,9 @@ import pandas as pd
 import os
 import psycopg2
 
+
+import app_s3
+
 logger = logging.getLogger(__name__)
 
 db_conn = psycopg2.connect(
@@ -44,3 +47,6 @@ sql = """
 """
 
 df = pd.read_sql(sql, db_conn)
+df.info()
+
+app_s3.write_dataframe(df, "preprocess_1.csv")
