@@ -41,7 +41,7 @@ TODO
     - [GitHub](https://github.com/u6k)
     - [Blog](https://blog.u6k.me/)
 
-#### Contributing
+## Contributing
 
 当プロジェクトに興味を持っていただき、ありがとうございます。[新しいチケットを起票](https://redmine.u6k.me/projects/investment-horse-racing-predict/issues)していただくか、プルリクエストをサブミットしていただけると幸いです。
 
