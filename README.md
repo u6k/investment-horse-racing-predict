@@ -1,8 +1,8 @@
 # 競馬予測 _(investment-horse-racing-predict)_
 
 [![Build Status](https://travis-ci.org/u6k/investment-horse-racing-predict.svg?branch=master)](https://travis-ci.org/u6k/investment-horse-racing-predict)
-[![license](https://img.shields.io/github/license/u6k/investment-horse-racing-predict.svg)](https://github.com/u6k/investment-horse-racing-predict/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/investment-horse-racing-predict.svg)](https://github.com/u6k/investment-horse-racing-predict/releases)
+[![license](https://img.shields.io/github/license/u6k/investment-horse-racing-predict)](https://github.com/u6k/investment-horse-racing-predict/blob/master/LICENSE)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/u6k/investment-horse-racing-predict)](https://github.com/u6k/investment-horse-racing-predict/releases)
 [![WebSite](https://img.shields.io/website-up-down-green-red/https/shields.io.svg?label=u6k.Redmine)](https://redmine.u6k.me/projects/investment-horse-racing-predict)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
