@@ -1,4 +1,4 @@
-from sklearn import ensemble
+from sklearn import ensemble, model_selection
 
 import app_s3
 
@@ -12,9 +12,25 @@ train_y = df_train_y.values
 test_x = df_test_x.values
 test_y = df_test_y.values
 
-model = ensemble.RandomForestClassifier(n_estimators=500, criterion="entropy", max_depth=8, class_weight="balanced").fit(train_x, train_y)
+# best_params: {'criterion': 'gini', 'max_depth': 8, 'n_estimators': 1000}
+parameters = {
+    "n_estimators": [100, 200, 500, 750, 1000],
+    "criterion": ["gini", "entropy"],
+    "max_depth": [4, 8, 16, 32, 64],
+}
 
-df_test_y["predict"] = model.predict(test_x)
+clf = model_selection.GridSearchCV(
+    ensemble.RandomForestClassifier(),
+    parameters,
+    cv=5,
+    n_jobs=-1,
+    verbose=1
+)
 
-app_s3.write_dataframe(df_test_y, "predict_result.csv")
+clf.fit(train_x, train_y)
+
+print(f"best_params: {clf.best_params_}")
+
+model = clf.best_estimator_
+
 app_s3.write_sklearn_model(model, "model.joblib")
