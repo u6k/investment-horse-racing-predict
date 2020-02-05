@@ -62,6 +62,8 @@ sql = """
             r.race_id = pp.race_id
             and r.horse_number = pp.horse_number
             and pp.payoff_type = 'place'
+    where
+        i.start_datetime > '2005-01-01'
     order by
         i.start_datetime, i.race_id
 """

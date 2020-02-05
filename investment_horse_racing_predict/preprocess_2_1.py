@@ -1,6 +1,10 @@
 import app_s3
 
-df = app_s3.read_dataframe("preprocess_1.csv", index_col=0)
+INPUT_FILE = "preprocess_1.csv"
+OUTPUT_FILE = "preprocess_2_1.csv"
+
+
+df = app_s3.read_dataframe(INPUT_FILE, index_col=0)
 df.info()
 df.head()
 
@@ -36,4 +40,4 @@ df = df.drop("result_odds_place", axis=1)
 
 df.info()
 df.head()
-app_s3.write_dataframe(df, "preprocess_2.csv")
+app_s3.write_dataframe(df, OUTPUT_FILE)
