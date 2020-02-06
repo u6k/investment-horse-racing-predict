@@ -6,10 +6,10 @@ from app_logging import logger
 
 # Setting
 INPUT_FILE_ORIGIN = "preprocess_1.csv"
-INPUT_FILE_TRAIN_PREDICT = "predict.model_2.preprocess_3_1.train.csv"
-INPUT_FILE_TEST_PREDICT = "predict.model_2.preprocess_3_1.test.csv"
-OUTPUT_FILE_TRAIN_SIMULATE = "simulate_trade_1.model_2.preprocess_3_1.train.csv"
-OUTPUT_FILE_TEST_SIMULATE = "simulate_trade_1.model_2.preprocess_3_1.test.csv"
+INPUT_FILE_TRAIN_PREDICT = "predict.model_1.preprocess_3_1.train.csv"
+INPUT_FILE_TEST_PREDICT = "predict.model_1.preprocess_3_1.test.csv"
+OUTPUT_FILE_TRAIN_SIMULATE = "simulate_trade_1_2.train.csv"
+OUTPUT_FILE_TEST_SIMULATE = "simulate_trade_1_2.test.csv"
 
 
 # Load data
@@ -30,12 +30,12 @@ def simulate_trade(df):
     df["profit"] = 0.0
 
     for id in df.index:
-        if df.at[id, "predict"] < 2.0:
+        if df.at[id, "predict"] < 4.0:
             df.at[id, "buy_signal"] = "buy"
 
-            if df.at[id, "result"] == 1:
+            if df.at[id, "result"] <= 3:
                 df.at[id, "buy_result"] = "win"
-                df.at[id, "profit"] = df.at[id, "result_odds_win"] - 1.0
+                df.at[id, "profit"] = df.at[id, "result_odds_place"] - 1.0
             else:
                 df.at[id, "buy_result"] = "lose"
                 df.at[id, "profit"] = -1.0
@@ -59,8 +59,6 @@ def report(df):
     report = {}
 
     report["data_length"] = len(df)
-    report["start_datetime"] = min(df["start_datetime"])
-    report["end_datetime"] = max(df["start_datetime"])
 
     report["buy_count"] = len(df.query("buy_signal == 'buy'"))
     report["win_count"] = len(df.query("buy_result == 'win'"))

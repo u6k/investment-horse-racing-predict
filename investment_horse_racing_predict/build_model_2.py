@@ -1,7 +1,8 @@
 import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-from custom_model import RandomRegressor
 import app_s3
 from app_logging import logger
 
@@ -11,9 +12,9 @@ INPUT_FILE_TRAIN_X = "preprocess_3_1.train_x.csv"
 INPUT_FILE_TRAIN_Y = "preprocess_3_1.train_y.csv"
 INPUT_FILE_TEST_X = "preprocess_3_1.test_x.csv"
 INPUT_FILE_TEST_Y = "preprocess_3_1.test_y.csv"
-MODEL_FILE = "model_1.preprocess_3_1.joblib"
-OUTPUT_FILE_TRAIN_PREDICT = "predict.model_1.preprocess_3_1.train.csv"
-OUTPUT_FILE_TEST_PREDICT = "predict.model_1.preprocess_3_1.test.csv"
+MODEL_FILE = "model_2.preprocess_3_1.joblib"
+OUTPUT_FILE_TRAIN_PREDICT = "predict.model_2.preprocess_3_1.train.csv"
+OUTPUT_FILE_TEST_PREDICT = "predict.model_2.preprocess_3_1.test.csv"
 
 
 # Load data
@@ -28,7 +29,7 @@ df_test_y = app_s3.read_dataframe(INPUT_FILE_TEST_Y, index_col=0)
 # Fit model
 logger.info("Fit model")
 
-model = RandomRegressor().fit(df_train_x.values, df_train_y.values)
+model = RandomForestRegressor().fit(df_train_x.values, np.reshape(df_train_y.values, (-1)))
 
 app_s3.write_sklearn_model(model, MODEL_FILE)
 model = app_s3.read_sklearn_model(MODEL_FILE)

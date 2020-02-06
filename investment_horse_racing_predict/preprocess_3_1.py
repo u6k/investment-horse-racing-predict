@@ -11,7 +11,7 @@ df = app_s3.read_dataframe(INPUT_FILE, index_col=0)
 df.info()
 df.head()
 
-df_train = df.query("'2008-01-01'<=start_datetime<'2019-01-01'").dropna()
+df_train = df.query("'2018-01-01'<=start_datetime<'2019-01-01'").dropna()
 df_test = df.query("'2019-01-01'<=start_datetime<'2020-01-01'").dropna()
 
 df_train_x = df_train.drop(["start_datetime", "result"], axis=1)
