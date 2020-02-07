@@ -18,7 +18,7 @@ def get_s3_client():
 
 def read_dataframe(s3_key, **kwargs):
     s3 = get_s3_client()
-    obj = s3.get_object(Bucket=os.getenv("S3_BUCKET"), Key=os.getenv("S3_FOLDER")+s3_key)
+    obj = s3.get_object(Bucket=os.getenv("S3_BUCKET"), Key=os.getenv("S3_FOLDER")+"/"+s3_key)
     df = pd.read_csv(obj["Body"], **kwargs)
 
     return df
@@ -30,14 +30,14 @@ def write_dataframe(df, s3_key):
         s3 = get_s3_client()
         s3.put_object(
             Bucket=os.getenv("S3_BUCKET"),
-            Key=os.getenv("S3_FOLDER")+s3_key,
+            Key=os.getenv("S3_FOLDER")+"/"+s3_key,
             Body=io.BytesIO(buf.getvalue().encode())
         )
 
 
 def read_sklearn_model(s3_key):
     s3 = get_s3_client()
-    obj = s3.get_object(Bucket=os.getenv("S3_BUCKET"), Key=os.getenv("S3_FOLDER")+s3_key)
+    obj = s3.get_object(Bucket=os.getenv("S3_BUCKET"), Key=os.getenv("S3_FOLDER")+"/"+s3_key)
     with io.BytesIO(obj["Body"].read()) as buf:
         model = joblib.load(buf)
 
@@ -50,6 +50,6 @@ def write_sklearn_model(model, s3_key):
         s3 = get_s3_client()
         s3.put_object(
             Bucket=os.getenv("S3_BUCKET"),
-            Key=os.getenv("S3_FOLDER")+s3_key,
+            Key=os.getenv("S3_FOLDER")+"/"+s3_key,
             Body=io.BytesIO(buf.getvalue())
         )
