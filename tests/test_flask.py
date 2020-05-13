@@ -16,3 +16,6 @@ class TestFlask:
 
         result_data = json.loads(result.get_data(as_text=True))
         assert result_data["version"] == VERSION
+        assert result_data["database"]
+        assert result_data["result_predict_model.algorithm"] is not None
+        assert result_data["vote_predict_model.algorithm"] is not None
