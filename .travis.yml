@@ -8,8 +8,8 @@ addons:
 
 script:
   # Setup
-  - sed -i -e "s#result_predict_model\.json#$RESULT_PREDICT_MODEL_URL#g" .env
-  - sed -i -e "s#vote_predict_model\.json#$VOTE_PREDICT_MODEL_URL#g" .env
+  - sed -i -e "s#result_predict_model\.json#${RESULT_PREDICT_MODEL_URL}#g" .env
+  - sed -i -e "s#vote_predict_model\.json#${VOTE_PREDICT_MODEL_URL}#g" .env
   # Build, Test
   - docker-compose build
   - docker-compose run app pipenv run lint
