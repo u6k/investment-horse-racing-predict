@@ -6,12 +6,13 @@ RUN apt-get update && \
     apt-get clean && \
     pip install pipenv
 
-WORKDIR /var/tmp
+WORKDIR /var/myapp
 COPY Pipfile .
 COPY Pipfile.lock .
-RUN pipenv install --deploy --system
+RUN pipenv install
 
 VOLUME /var/myapp
-WORKDIR /var/myapp
+ENV FLASK_APP investment_horse_racing_predict/flask.py
+EXPOSE 5000
 
-CMD ["bash"]
+CMD ["pipenv", "run", "flask"]

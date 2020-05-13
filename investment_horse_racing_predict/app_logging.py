@@ -1,10 +1,36 @@
-from logging import Formatter, getLogger, StreamHandler, DEBUG
+import warnings
+import logging
+import logging.config
 
-logger = getLogger("investment_horse_racing_predict")
-formatter = Formatter("%(asctime)-15s - %(levelname)-8s - %(message)s")
-handler = StreamHandler()
-handler.setLevel(DEBUG)
-handler.setFormatter(formatter)
-logger.setLevel(DEBUG)
-logger.addHandler(handler)
-logger.propagate = False
+
+logging.config.dictConfig({
+    "version": 1,
+
+    "formatters": {
+        "investment_horse_racing_predict.logging.format": {
+            "format": "%(asctime)s - %(levelname)-5s [%(name)s] %(message)s",
+        },
+    },
+
+    "handlers": {
+        "investment_horse_racing_predict.logging.handler": {
+            "class": "logging.StreamHandler",
+            "formatter": "investment_horse_racing_predict.logging.format",
+            "level": logging.DEBUG,
+        },
+    },
+
+    "loggers": {
+        "investment_horse_racing_predict": {
+            "handlers": ["investment_horse_racing_predict.logging.handler"],
+            "level": logging.DEBUG,
+            "propagate": 0,
+        },
+    },
+})
+
+warnings.simplefilter("ignore")
+
+
+def get_logger(name):
+    return logging.getLogger(name)
