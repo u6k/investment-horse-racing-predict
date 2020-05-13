@@ -7,9 +7,14 @@ addons:
       - docker-ce
 
 script:
+  # Setup
+  - sed -i -e "s#result_predict_model\.json#$RESULT_PREDICT_MODEL_URL#g" .env
+  - sed -i -e "s#vote_predict_model\.json#$VOTE_PREDICT_MODEL_URL#g" .env
+  # Build, Test
   - docker-compose build
   - docker-compose run app pipenv run lint
   - docker-compose run app pipenv run test
+  # Build for production
   - docker build -t u6kapps/investment-horse-racing-predict -f Dockerfile.production .
 
 after_success:
