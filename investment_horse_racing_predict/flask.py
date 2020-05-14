@@ -1,10 +1,11 @@
 import os
-from flask import Flask, g
+from flask import Flask, request, g
 import psycopg2
 from psycopg2.extras import DictCursor
 from queue import Queue
 import time
 import functools
+import pandas as pd
 
 from investment_horse_racing_predict import VERSION, main
 from investment_horse_racing_predict.app_logging import get_logger
@@ -14,6 +15,18 @@ logger = get_logger(__name__)
 
 
 app = Flask(__name__)
+
+
+
+
+
+pd.options.display.max_columns = 1000
+pd.options.display.show_dimensions = True
+pd.options.display.width = 10000
+
+
+
+
 
 
 singleQueue = Queue(maxsize=1)
@@ -62,6 +75,36 @@ def health():
     except Exception:
         logger.exception("error")
         return "error", 500
+
+
+
+
+@app.route("/api/predict", methods=["POST"])
+@multiple_control(singleQueue)
+def predict():
+    logger.info("#predict: start")
+    try:
+
+        args = request.get_json()
+        logger.debug(f"#predict: args={args}")
+
+        race_id = args.get("race_id")
+        asset = args.get("asset")
+        vote_cost_limit = args.get("vote_cost_limit", 10000)
+
+        result = main.predict(race_id, asset, vote_cost_limit)
+
+        return result
+
+    except Exception:
+        logger.exception("error")
+        return "error", 500
+
+
+
+
+
+
 
 
 def get_crawler_db():
