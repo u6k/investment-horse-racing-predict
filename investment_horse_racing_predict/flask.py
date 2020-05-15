@@ -17,16 +17,9 @@ logger = get_logger(__name__)
 app = Flask(__name__)
 
 
-
-
-
 pd.options.display.max_columns = 1000
 pd.options.display.show_dimensions = True
 pd.options.display.width = 10000
-
-
-
-
 
 
 singleQueue = Queue(maxsize=1)
@@ -77,8 +70,6 @@ def health():
         return "error", 500
 
 
-
-
 @app.route("/api/predict", methods=["POST"])
 @multiple_control(singleQueue)
 def predict():
@@ -99,12 +90,6 @@ def predict():
     except Exception:
         logger.exception("error")
         return "error", 500
-
-
-
-
-
-
 
 
 def get_crawler_db():
