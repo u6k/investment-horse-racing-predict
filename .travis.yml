@@ -8,7 +8,7 @@ addons:
 
 script:
   # Setup
-  - sh -c "curl -L -o tests/data/init.sql '$TEST_DATA_INIT_SQL_URL'"
+  - ./.travis.sh
   # Build
   - docker-compose build
   # Test
