@@ -6,6 +6,9 @@ addons:
     packages:
       - docker-ce
 
+before_script:
+  - "curl -L -o tests/data/init.sql '$TEST_DATA_INIT_SQL_URL'"
+
 script:
   # Setup
   - curl -L -o tests/data/init.sql 'https://s3.u6k.me/horse-racing/test/init.sql?Expires=1621008801&AWSAccessKeyId=YZD5BTZNW407XCX61AJE&Signature=uV026cv58sVDhYT70C0WEX6Srro%3D'
