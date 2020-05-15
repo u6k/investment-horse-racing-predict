@@ -5,6 +5,7 @@ services:
     build: .
     volumes:
       - ".:/var/myapp"
+      - "./dataframe:/var/dataframe"
     environment:
       - "TZ=Asia/Tokyo"
       - "CRAWLER_DB_HOST=${CRAWLER_DB_HOST}"
@@ -14,5 +15,16 @@ services:
       - "CRAWLER_DB_PASSWORD=${CRAWLER_DB_PASSWORD}"
       - "RESULT_PREDICT_MODEL_URL=${RESULT_PREDICT_MODEL_URL}"
       - "VOTE_PREDICT_MODEL_URL=${VOTE_PREDICT_MODEL_URL}"
+    depends_on:
+      - crawler_db
     ports:
       - "5000:5000"
+
+  crawler_db:
+    image: postgres:12
+    volumes:
+      - "./tests/data:/docker-entrypoint-initdb.d"
+    environment:
+      - "POSTGRES_USER=${CRAWLER_DB_USERNAME}"
+      - "POSTGRES_PASSWORD=${CRAWLER_DB_PASSWORD}"
+      - "POSTGRES_DB=${CRAWLER_DB_DATABASE}"
