@@ -7,9 +7,15 @@ addons:
       - docker-ce
 
 script:
+  # Setup
+  - curl -L -o tests/data/init.sql '$TEST_DATA_INIT_SQL_URL'
+  # Build
   - docker-compose build
-  - docker-compose run app pipenv run lint
-  - docker-compose run app pipenv run test
+  # Test
+  - docker-compose up -d
+  - docker-compose exec app pipenv run lint
+  - docker-compose exec app pipenv run test
+  # Build for production
   - docker build -t u6kapps/investment-horse-racing-predict -f Dockerfile.production .
 
 after_success:
