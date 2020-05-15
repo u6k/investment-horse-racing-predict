@@ -10,6 +10,7 @@ COPY . /var/myapp
 WORKDIR /var/myapp
 RUN pipenv install
 
+VOLUME /var/dataframe
 ENV FLASK_APP investment_horse_racing_predict/flask.py
 EXPOSE 5000
 

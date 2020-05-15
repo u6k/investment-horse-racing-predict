@@ -5,6 +5,7 @@ services:
     build: .
     volumes:
       - ".:/var/myapp"
+      - "./dataframe:/var/dataframe"
     environment:
       - "TZ=Asia/Tokyo"
       - "CRAWLER_DB_HOST=${CRAWLER_DB_HOST}"
