@@ -8,6 +8,10 @@ RUN apt-get update && \
 
 COPY . /var/myapp
 WORKDIR /var/myapp
-RUN pipenv install --deploy --system
+RUN pipenv install
 
-CMD ["bash"]
+VOLUME /var/dataframe
+ENV FLASK_APP investment_horse_racing_predict/flask.py
+EXPOSE 5000
+
+CMD ["pipenv", "run", "flask"]

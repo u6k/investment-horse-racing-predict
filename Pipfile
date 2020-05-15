@@ -7,10 +7,11 @@ verify_ssl = true
 flake8 = "*"
 autopep8 = "*"
 nose = "*"
-boto3 = "*"
+Flask = "*"
 psycopg2 = "*"
 pandas = "*"
-sklearn = "*"
+numpy = "*"
+lightgbm = "*"
 
 [requires]
 python_version = "3.8"
@@ -19,3 +20,4 @@ python_version = "3.8"
 lint = "flake8 ."
 fix = "autopep8 -ivr ."
 test = "nosetests -v"
+flask = "flask run --host=0.0.0.0"
