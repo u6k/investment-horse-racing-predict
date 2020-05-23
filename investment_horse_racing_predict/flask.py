@@ -92,18 +92,24 @@ def predict():
         return "error", 500
 
 
+def get_crawler_db_without_flask():
+    crawler_db = psycopg2.connect(
+        host=os.getenv("CRAWLER_DB_HOST"),
+        port=os.getenv("CRAWLER_DB_PORT"),
+        dbname=os.getenv("CRAWLER_DB_DATABASE"),
+        user=os.getenv("CRAWLER_DB_USERNAME"),
+        password=os.getenv("CRAWLER_DB_PASSWORD")
+    )
+    crawler_db.autocommit = False
+    crawler_db.set_client_encoding("utf-8")
+    crawler_db.cursor_factory = DictCursor
+
+    return crawler_db
+
+
 def get_crawler_db():
     if "crawler_db" not in g:
-        g.crawler_db = psycopg2.connect(
-            host=os.getenv("CRAWLER_DB_HOST"),
-            port=os.getenv("CRAWLER_DB_PORT"),
-            dbname=os.getenv("CRAWLER_DB_DATABASE"),
-            user=os.getenv("CRAWLER_DB_USERNAME"),
-            password=os.getenv("CRAWLER_DB_PASSWORD")
-        )
-        g.crawler_db.autocommit = False
-        g.crawler_db.set_client_encoding("utf-8")
-        g.crawler_db.cursor_factory = DictCursor
+        g.crawler_db = get_crawler_db_without_flask()
 
     return g.crawler_db
 
