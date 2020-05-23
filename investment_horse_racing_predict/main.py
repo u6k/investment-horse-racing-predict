@@ -145,9 +145,9 @@ def join_crawled_data(race_id, data_period=365):
         "course_length": 6000,
         "odds_win": 999,
         "speed": 10,
-        "birthday_horse": datetime(1900, 1, 1),
-        "birthday_jockey": datetime(1900, 1, 1),
-        "birthday_trainer": datetime(1900, 1, 1),
+        "birthday_horse": np.datetime64(datetime(1900, 1, 1)),
+        "birthday_jockey": np.datetime64(datetime(1900, 1, 1)),
+        "birthday_trainer": np.datetime64(datetime(1900, 1, 1)),
     }, inplace=True)
     df_tmp.fillna(0, inplace=True)
 
