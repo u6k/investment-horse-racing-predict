@@ -178,6 +178,7 @@ def calc_horse_jockey_trainer_score(df_arg):
 
     df_score_horse = df_score[["race_id", "start_datetime", "horse_id", "score"]].sort_values(["horse_id", "start_datetime"])
     df_score_horse = df_score_horse.groupby(["race_id", "start_datetime", "horse_id"])[["score"]].sum()
+    df_score_horse.sort_values(["horse_id", "start_datetime"], inplace=True)
     df_score_horse = df_score_horse.groupby("horse_id").rolling(10000, min_periods=1)[["score"]].sum()
     df_score_horse.index = df_score_horse.index.droplevel(0)
     df_score_horse.reset_index(inplace=True)
@@ -190,6 +191,7 @@ def calc_horse_jockey_trainer_score(df_arg):
 
     df_score_jockey = df_score[["race_id", "start_datetime", "jockey_id", "score"]].sort_values(["jockey_id", "start_datetime"])
     df_score_jockey = df_score_jockey.groupby(["race_id", "start_datetime", "jockey_id"])[["score"]].sum()
+    df_score_jockey.sort_values(["jockey_id", "start_datetime"], inplace=True)
     df_score_jockey = df_score_jockey.groupby("jockey_id").rolling(10000, min_periods=1)[["score"]].sum()
     df_score_jockey.index = df_score_jockey.index.droplevel(0)
     df_score_jockey.reset_index(inplace=True)
@@ -202,6 +204,7 @@ def calc_horse_jockey_trainer_score(df_arg):
 
     df_score_trainer = df_score[["race_id", "start_datetime", "trainer_id", "score"]].sort_values(["trainer_id", "start_datetime"])
     df_score_trainer = df_score_trainer.groupby(["race_id", "start_datetime", "trainer_id"])[["score"]].sum()
+    df_score_trainer.sort_values(["trainer_id", "start_datetime"], inplace=True)
     df_score_trainer = df_score_trainer.groupby("trainer_id").rolling(10000, min_periods=1)[["score"]].sum()
     df_score_trainer.index = df_score_trainer.index.droplevel(0)
     df_score_trainer.reset_index(inplace=True)
