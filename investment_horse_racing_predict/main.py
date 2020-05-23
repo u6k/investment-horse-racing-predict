@@ -100,7 +100,7 @@ def join_crawled_data(race_id, data_period=365):
             t.first_licensing_year as first_licensing_year_trainer
         from
             race_denma as d
-            left join race_info as i on
+            inner join race_info as i on
                 d.race_id = i.race_id
                 and i.start_datetime >= '{start_date}'
                 and i.start_datetime <= '{end_date}'
@@ -145,9 +145,9 @@ def join_crawled_data(race_id, data_period=365):
         "course_length": 6000,
         "odds_win": 999,
         "speed": 10,
-        "birthday_horse": np.datetime64(datetime(1900, 1, 1)),
-        "birthday_jockey": np.datetime64(datetime(1900, 1, 1)),
-        "birthday_trainer": np.datetime64(datetime(1900, 1, 1)),
+        "birthday_horse": datetime(1900, 1, 1),
+        "birthday_jockey": datetime(1900, 1, 1),
+        "birthday_trainer": datetime(1900, 1, 1),
     }, inplace=True)
     df_tmp.fillna(0, inplace=True)
 
