@@ -100,21 +100,21 @@ def join_crawled_data(race_id, data_period=365):
             t.first_licensing_year as first_licensing_year_trainer
         from
             race_denma as d
-            inner join race_info as i on
+            left join race_info as i on
                 d.race_id = i.race_id
                 and i.start_datetime >= '{start_date}'
                 and i.start_datetime <= '{end_date}'
-            inner join race_result as r on
+            left join race_result as r on
                 d.race_id = r.race_id
                 and d.horse_number = r.horse_number
-            inner join odds_win as o on
+            left join odds_win as o on
                 d.race_id = o.race_id
                 and d.horse_number = o.horse_number
-            inner join horse as h on
+            left join horse as h on
                 d.horse_id = h.horse_id
-            inner join jockey as j on
+            left join jockey as j on
                 d.jockey_id = j.jockey_id
-            inner join trainer as t on
+            left join trainer as t on
                 d.trainer_id = t.trainer_id
         order by i.start_datetime, d.horse_number"""
 
